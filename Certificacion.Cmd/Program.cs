@@ -2,6 +2,7 @@
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web.Script.Serialization;
 
 
@@ -12,13 +13,42 @@ namespace Certificacion.Cmd
 
         static void Main(string[] args)
         {
+            var user = new User { Name = "eguzman", Id = 1 };
+            Type t1 = typeof(User);
+            Type t2 = user.GetType();
+
+            var property = t2.GetProperty("Name");
+            var value = property.GetValue(user, null);
+
+
+            var newUser = (User)Activator.CreateInstance(typeof(User));
+            var genericUser = Activator.CreateInstance<User>();
+            var userContructor = typeof(User).GetConstructors()[0];
+
+            var advanceUser = (User)userContructor.Invoke(new object[] { 1 });
+            int[,] numbers2D = new int[3, 2]
+            {
+                { 9, 99 },
+                { 3, 33 },
+                { 5, 55 }
+            };
+            // Or use the short form:
+            // int[,] numbers2D = { { 9, 99 }, { 3, 33 }, { 5, 55 } };
+
+            foreach (int i in numbers2D)
+            {
+                System.Console.Write("{0} ", i);
+            }
+
+
+
             int myInt = 12;
             object obj = myInt;      // boxing
             int myInt2 = (int)obj;
 
 
             var numbers = new[] { 1, 2, -1, 0, 3, 4, 5 };
-            
+
             var name = new Name
             {
                 FirstName = "esteban",
